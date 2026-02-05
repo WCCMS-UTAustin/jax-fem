@@ -1,4 +1,3 @@
-
 # CARDIAX
 
 CARDIAX is a GPU-accelerated differentiable finite element package based on [JAX](https://github.com/google/jax), forked from [JAX-FEM](https://github.com/deepmodeling/jax-fem). CARDIAX focuses on solving cardiac mechanics problems in a single, unified framework from Laplace-Dirichlet-Rule-Based method for fiber generation to biventricular inverse models. This package is actively managed by the [Willerson Center for Cardiovascular Modeling and Simulation (WCCMS)](https://oden.utexas.edu/research/centers-and-groups/willerson-center-for-cardiovascular-modeling-and-simulation/) and is constantly adapting to accommodate the suite of problems we are intereseted in solving. **We are only focused on GPU development**.
@@ -51,9 +50,6 @@ This project is licensed under the GNU General Public License v3 - see the [LICE
 
 ## Citations
 
-If you're using this project, you can cite this work [here](CITATION.cff).
+If you're using this project, you can cite this work [here](CITATION.cff). Please also cite JAX-FEM's work as well! [Here is their repo](https://github.com/deepmodeling/jax-fem).
 
 We'll add a list of others papers built upon this framework below:
-
-
-
