@@ -24,7 +24,7 @@ Once the `jax` installation is working, the easiest option is to build all the d
 pip install -e .
 ```
 
-**Warning: JAX just upgrade to 0.9, so we haven't created the latest environment yet.**
+**Warning: JAX just upgraded to 0.9, so we haven't created the latest environment yet.**
 
 ## Examples
 
