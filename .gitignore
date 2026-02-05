@@ -100,4 +100,5 @@ venv.bak/
 **/*.vtu
 **/*.gif
 **/*.png
+**/*.msh
 !tutorials/figures/**
