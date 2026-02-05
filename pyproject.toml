@@ -1,3 +1,85 @@
-[build-system]
-requires = ["setuptools>=43.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+[build-system] # Require setuptool version due to https://github.com/pypa/setuptools/issues/2938
+requires = ["setuptools>=61.0.0", "wheel"]
+
+ # See https://python-poetry.org/docs/pyproject/ for more keywords for the project table
+[project]
+name = "cardiax"
+authors = [
+    {name = "Benjamin Thomas", email = "bjt2369@utexas.edu"},
+    {name = "Kenneth Meyer", email = "kmeyer2@utexas.edu"},
+    {name = "Gabriel Peery", email = "gabriel.peery@utexas.edu"},
+    {name = "Ulas Akyuz", email = "ua2375@my.utexas.edu"}
+    ]
+version = "0.1.0"
+description = "Cardiax: A Python package for GPU enabled cardiac simulations"
+
+# "readme" the description field in your package, see: https://python-poetry.org/docs/pyproject/#readme
+readme = "README.md"
+
+requires-python = ">=3.9, <=3.13" # Needed for TACC, default 3.9.7
+
+# Path to license file, see: https://spdx.org/licenses/ for options
+license = "GPL-3.0-only"
+
+# Direct dependencies
+dependencies = [
+    'jax', # JAX is used for automatic differentiation and GPU acceleration
+    'numpy', # Numpy is used for numerical operations
+    'meshio', # Meshio is used for reading and writing mesh files
+    'lineax', # Lineax is used for matrix operators on GPUs
+    'jaxtyping', # Jaxtyping is used for type annotations in JAX
+    'fenics-basix', # Basix is used for finite element basis functions
+    'pyyaml', # PyYAML is used for reading configuration files
+    'pygmsh', # pygmsh is used for mesh generation
+    'pyvista', # PyVista is used for 3D visualization
+    'vtk < 9.4' # VTK is used for 3D visualization
+]
+
+[project.optional-dependencies]
+test = [
+   "ruff", # Formatting: https://docs.astral.sh/ruff/rules/#pydocstyle-d
+   "pytest", # Testing suite
+   "pytest-cov" # Coverage reports
+]
+
+docs = [
+    "mkdocs==1.6.1",
+    "mkdocs-autorefs==1.4.3",
+    "mkdocs-get-deps==0.2.0",
+    "mkdocs-material==9.7.1",
+    "mkdocs-material-extensions==1.3.1",
+    "mkdocstrings==1.0.1",
+    "mkdocstrings-python==2.0.1"    
+]
+
+pypi = [
+    "build" # Used for building wheels and uploading to pypi
+]
+
+all = ["cardiax[test,docs,pypi]"]
+[tool.mypy]
+ignore_missing_imports = true # Does not show errors when importing untyped libraries
+exclude = [ # We only want mypy to consider files that are not generated in installing or building documentation
+    "docs/",
+    "build/"
+]
+files = [  # Folder to which files that should be checked by mypy
+    "src",
+    "test"
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+    "--cov=cardiax",
+    "--cov-report=html",
+    "--cov-report=term-missing",
+    "-v"]
+
+testpaths = [
+    "test"
+]
+
+# Pair notebooks with python files
+[tool.jupytext]
+formats = "demos///ipynb,demos///py:percent"
