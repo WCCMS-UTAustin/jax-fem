@@ -1,0 +1,40 @@
+site_name: CARDIAX Documentation
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  
+  - Tutorials:
+      - Introductory:
+        - Poisson: tutorials/Introductory/poisson.md
+        - NeoHookean: tutorials/Introductory/neohookean.md
+
+      - Intermediate:
+        - Hyperelasticity: tutorials/Intermediate/hyperelasticity.md
+        - Inverse_Problems: tutorials/Intermediate/inverse_problems.md
+
+      - Advanced:
+        - Dynamic_Problems: tutorials/Advanced/dynamic_problems.md
+        - Parameter_Estimation: tutorials/Advanced/parameter_estimation.md
+
+      - Cardiac_Modeling:
+        - Fiber_Generation: tutorials/Cardiac_Modeling/LDRBM.md
+        - Monodomain: tutorials/Cardiac_Modeling/monodomain.md
+        - Myocardium: tutorials/Cardiac_Modeling/myocardium.md
+
+  - API:
+      - Main Functionality: api/main_functionality.md
+      - Mesh Generation: api/mesh_generation.md
+      - Post Processing: api/post_processing.md
+  - Limitations: limitations.md
+
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: ["src"]

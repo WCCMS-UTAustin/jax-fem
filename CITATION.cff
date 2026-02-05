@@ -1,0 +1,19 @@
+
+### This needs to be updated pending paper acceptance ###
+
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Thomas"
+  given-names: "Benjamin J."
+- family-names: "Goodbrake"
+  given-names: "Christian"
+- family-names: "Meyer"
+  given-names: "Kenneth"
+- family-names: "Sacks"
+  given-names: "Michael S."
+title: "CARDIAX: A JAX-based platform for Rapid Cardiac Finite Element Simulations"
+notes: "Paper was submitted to FIMH Special Issue in Biomechanics and Modeling in Mechanobiology."
+version: 0.1.0
+date-released: "2026-02-06"
+doi: "https://doi.org/10.31224/4923"
