@@ -47,7 +47,6 @@ def gmsh_to_meshio(msh_file: Optional[str] = None, **kwargs) -> Mesh:
 def rectangle_mesh(Nx: int = 10, Ny: int = 10, 
                    Lx: float = 1.0, Ly: float = 1.0, 
                    ele_type: str = "quad", 
-                   degree: int = 1, 
                    msh_file: Optional[str] = None, 
                    verbose: bool = False) -> Mesh:
     """Generate a mesh for a rectangle using gmsh.
@@ -69,6 +68,8 @@ def rectangle_mesh(Nx: int = 10, Ny: int = 10,
     offset_y = 0.
     domain_x = Lx
     domain_y = Ly
+
+    _, _, _, _, degree, _ = get_elements(ele_type)
     gmsh.initialize()
     if not verbose:
         gmsh.option.setNumber("General.Terminal", 0)
@@ -76,7 +77,8 @@ def rectangle_mesh(Nx: int = 10, Ny: int = 10,
 
     # Need to figure out if quad8 or quad9, below is for quad8
     # Configure to get quad8 (serendipity) instead of quad9 (complete)
-    gmsh.option.setNumber("Mesh.SecondOrderIncomplete", 1)
+    if ele_type == "quad8":
+        gmsh.option.setNumber("Mesh.SecondOrderIncomplete", 1)
 
     # Create rectangle geometry
     p1 = gmsh.model.geo.addPoint(offset_x, offset_y, 0)
@@ -116,13 +118,11 @@ def rectangle_mesh(Nx: int = 10, Ny: int = 10,
 def box_mesh(Nx: int = 10, Ny: int = 10, Nz: int = 10, 
              Lx: float = 1.0, Ly: float = 1.0, Lz: float = 1.0, 
              ele_type: str = 'hexahedron', 
-             degree: int = 1, 
              msh_file: Optional[str] = None, 
              verbose: bool = False) -> Mesh:
     """
     Generate a structured box mesh using gmsh.geo API.
     """
-    assert ele_type != 'hexahedron20', "gmsh cannot produce hexahedron20 mesh?"
 
     _, _, _, _, degree, _ = get_elements(ele_type)
     
@@ -130,7 +130,8 @@ def box_mesh(Nx: int = 10, Ny: int = 10, Nz: int = 10,
     if not verbose:
         gmsh.option.setNumber("General.Terminal", 0)
     gmsh.option.setNumber("Mesh.MshFileVersion", 2.2)
-    gmsh.option.setNumber("Mesh.SecondOrderIncomplete", 1)
+    if ele_type == 'hexahedron20':
+        gmsh.option.setNumber("Mesh.SecondOrderIncomplete", 1)
 
     # Create 4 corner points for the base rectangle
     p1 = gmsh.model.geo.addPoint(0, 0, 0)

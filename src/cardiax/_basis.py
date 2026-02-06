@@ -103,6 +103,14 @@ class BasisFns:
                 'gauss_order': 2,
                 'degree': 2
             },
+            'quad9': {
+                're_order': [0, 1, 3, 2, 4, 6, 7, 5, 8],
+                'element_family': basix.ElementFamily.P,
+                'basix_ele': basix.CellType.quadrilateral,
+                'basix_face_ele': basix.CellType.interval,
+                'gauss_order': 2,
+                'degree': 2
+            },
             'triangle': {
                 're_order': [0, 1, 2],
                 'element_family': basix.ElementFamily.P,
@@ -201,7 +209,6 @@ class BasisFns:
         else:
             element = basix.create_element(element_family, basix_ele, degree)
         vals_and_grads = element.tabulate(1, quad_points)[:, :, re_order, :]
-        #print(type(quad_points))
         shape_values = vals_and_grads[0, :, :, 0]
         shape_grads_ref = onp.transpose(vals_and_grads[1:, :, :, 0], axes=(1, 2, 0))
         logger.debug(f"ele_type = {ele_type}, quad_points.shape = (num_quads, dim) = {quad_points.shape}")
