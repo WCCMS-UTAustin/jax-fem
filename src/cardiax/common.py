@@ -9,6 +9,10 @@ from cardiax import logger
 def timeit(func):
     """A decorator to wrap a function for timing purposes.
 
+    Utilizes JAX's recommend block-until-ready to ensure JIT'd
+    compilation time is measured rather than initial tracer dispatch
+    time.
+
     Args:
         func (callable): The function to be wrapped to log times
 
@@ -20,6 +24,7 @@ def timeit(func):
     def timeit_wrapper(*args, **kwargs):
         start_time = time.perf_counter()
         result = func(*args, **kwargs)
+        jax.block_until_ready(result)
         end_time = time.perf_counter()
         total_time = end_time - start_time
         logger.debug(f'Function {func.__name__} took {total_time:.4f} seconds')

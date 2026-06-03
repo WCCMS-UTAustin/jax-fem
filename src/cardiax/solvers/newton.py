@@ -7,6 +7,7 @@ import time
 from jaxtyping import ArrayLike
 
 from cardiax._solver import Solver_Base
+from cardiax.common import timeit
 from cardiax import logger
 
 class Newton_Solver(Solver_Base):
@@ -88,9 +89,9 @@ class Newton_Solver(Solver_Base):
         # save total time and use individual steps to better
         # break down the time
         while res_val > atol and counter < max_iter:
-            dofs = self.linear_incremental_solver(res_vec, V, dofs)
+            dofs = timeit(self.linear_incremental_solver)(res_vec, V, dofs)
             # newton update + timing
-            res_vec, V = self.newton_update_helper(dofs, self.problem.internal_vars, self.problem.internal_vars_surfaces)
+            res_vec, V = timeit(self.newton_update_helper)(dofs, self.problem.internal_vars, self.problem.internal_vars_surfaces)
             res_val = np.linalg.norm(res_vec)                        
             logger.debug(f"res l_2 = {res_val}")
             counter += 1
