@@ -72,6 +72,7 @@ class Newton_Solver(Solver_Base):
         if self.initial_guess is not None:
             dofs = jax.flatten_util.ravel_pytree(self.initial_guess)[0]
 
+        # breakpoint()
         res_vec, V = self.newton_update_helper(dofs, self.problem.internal_vars, self.problem.internal_vars_surfaces)
         res_val = np.linalg.norm(res_vec)
         res_val_init = res_val

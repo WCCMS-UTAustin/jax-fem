@@ -456,6 +456,9 @@ class Solver_Base(ABC):
         Returns:
             _type_: _description_
         """
+
+        # I think this accepts a single input - might need to update
+        # set_params to account for this?
         @jax.custom_vjp
         def fwd_pred(params):
             self.problem.set_params(params)

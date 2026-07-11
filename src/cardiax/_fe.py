@@ -129,12 +129,17 @@ class Base_FE(ABC):
         JxW : onp.ndarray
             (num_cells, num_quads)
         """
+        # this assertion doesn't make sense when referencing surfaces in 3D space...
+        # need to see if this still works tho.
         assert self.shape_grads_ref.shape == (self.num_quads, self.num_nodes, self.dim)
+        
         physical_coos = onp.take(self.points[:, :self.dim], self.cells, axis=0)  # (num_cells, num_nodes, dim)
         # (num_cells, num_quads, num_nodes, dim, dim) -> (num_cells, num_quads, 1, dim, dim)
         jacobian_dx_deta = onp.sum(physical_coos[:, None, :, :, None] *
                                    self.shape_grads_ref[None, :, :, None, :], axis=2, keepdims=True)
+        # breakpoint()
         jacobian_det = onp.linalg.det(jacobian_dx_deta)[:, :, 0]  # (num_cells, num_quads)
+        # breakpoint()
         jacobian_deta_dx = onp.linalg.inv(jacobian_dx_deta)
         # (1, num_quads, num_nodes, 1, dim) @ (num_cells, num_quads, 1, dim, dim)
         # (num_cells, num_quads, num_nodes, 1, dim) -> (num_cells, num_quads, num_nodes, dim)
@@ -312,6 +317,7 @@ class Base_FE(ABC):
         cell_face_points = onp.take(cell_points, self.face_inds, axis=1)  # (num_cells, num_faces, num_face_vertices, dim)
         # cell_face_inds = onp.take(self.cells, self.face_inds, axis=1) # (num_cells, num_faces, num_face_vertices)
         if location_fn is not None:
+            # breakpoint()
             vmap_location_fn = jax.vmap(location_fn)
             def on_boundary(cell_points):
                 boundary_flag = vmap_location_fn(cell_points)

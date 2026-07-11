@@ -934,6 +934,7 @@ class Problem(metaclass=MethodWrappingMeta):
                 if mass_params and tensor_params:
                     assert mass_params == tensor_params, "Mass and tensor maps should have the same parameters and ordering."
                 ordered_dict[fe_key] = mass_params or tensor_params
+        
         else:
             ordered_dict = None
 

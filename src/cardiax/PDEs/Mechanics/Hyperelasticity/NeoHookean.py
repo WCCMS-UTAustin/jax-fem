@@ -1,4 +1,3 @@
-
 import jax.numpy as np
 import jax
 from cardiax import Problem
